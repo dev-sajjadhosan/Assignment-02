@@ -13,7 +13,7 @@ const initDB = async () => {
         email VARCHAR(300) UNIQUE NOT NULL,
         password TEXT NOT NULL,
         phone VARCHAR(20) NOT NULL,
-        role userRole NOT NULL DEFAULT 'customer'
+        role VARCHAR(20) NOT NULL DEFAULT 'customer',
         CONSTRAINT role_check CHECK (role IN ('admin', 'customer'))
         )
         `);
@@ -24,10 +24,12 @@ const initDB = async () => {
         vehicle_name VARCHAR(255) NOT NULL,
         type VARCHAR(50) NOT NULL,
         CONSTRAINT vehicle_type CHECK (type IN ('car','bike','van','SUV')),
+
         registration_number TEXT UNIQUE NOT NULL,
-        daily_rent_price NUMERIC(10, 2) NOT NULL CHECK (daily_rent_price  > 0),
+        daily_rent_price INT NOT NULL CHECK (daily_rent_price  > 0),
+
         availability_status VARCHAR(20) NOT NULL DEFAULT 'available',
-        CONSTRAINT avaliable_status CHECK (role In ('available','booked'))
+        CONSTRAINT avaliable_status CHECK (availability_status In ('available','booked'))
         )
         `);
 

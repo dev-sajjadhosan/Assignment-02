@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import config from "./config";
 import { authRouters } from "./auth/auth.routes";
 import initDB, { pool } from "./config/db";
+import { vehicleRoutes } from "./modules/vehicles/vehicles.routes";
 
 const app = express();
 const port = config.port;
@@ -24,7 +25,8 @@ app.get("/api/v1", async (req: Request, res: Response) => {
   });
 });
 
-app.use("/api/v1", authRouters);
+app.use("/api/v1/auth", authRouters);
+app.use("/api/v1/vehicles", vehicleRoutes);
 
 app.listen(port, () => {
   console.log(`The Ordo Server is running now on Port: ${port}`);
