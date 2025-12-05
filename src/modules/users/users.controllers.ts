@@ -6,8 +6,8 @@ const getAllUsers = async (req: Request, res: Response) => {
     const result = await usersServices.getAllUsers();
 
     if (result.rows.length === 0) {
-      res.status(200).json({
-        success: true,
+      res.status(404).json({
+        success: false,
         message: "No users exist",
         data: [],
       });
@@ -28,8 +28,8 @@ const updateUser = async (req: Request, res: Response) => {
     const result = await usersServices.updateUser(req.params.userId, req.body);
 
     if (result.rows.length === 0) {
-      res.status(200).json({
-        success: true,
+      res.status(404).json({
+        success: false,
         message: "User not found",
         data: [],
       });
@@ -49,4 +49,28 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export const usersControllers = { getAllUsers, updateUser };
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const result = await usersServices.deleteUser(req.params.userId);
+
+    if (result.rowCount === 0) {
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        messsgae: "User deleted successfully",
+      });
+    }
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+      errors: err,
+    });
+  }
+};
+
+export const usersControllers = { getAllUsers, updateUser, deleteUser };

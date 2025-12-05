@@ -18,4 +18,9 @@ const updateUser = async (id: string | undefined, body: any) => {
   return result;
 };
 
-export const usersServices = { getAllUsers, updateUser };
+const deleteUser = async (id: string | undefined) => {
+  const result = await pool.query(`DELETE FROM users WHERE id=$1`, [id]);
+  return result;
+};
+
+export const usersServices = { getAllUsers, updateUser, deleteUser };
