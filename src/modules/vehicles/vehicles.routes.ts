@@ -10,4 +10,4 @@ routes.get("/:vehicleId", vehicleControllers.getSingleVehicle);
 routes.put("/:vehicleId", auth("admin"), vehicleControllers.updateVehicle);
 routes.delete("/:vehicleId", auth("admin"), vehicleControllers.deleteVehicle);
 
-export const vehicleRoutes = routes;
+export const vehiclesRoutes = routes;
