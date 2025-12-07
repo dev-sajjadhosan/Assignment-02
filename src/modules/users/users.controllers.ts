@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { usersServices } from "./users.services";
+import { getBookings } from "../../helpers/getBookings";
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
@@ -51,15 +52,23 @@ const updateUser = async (req: Request, res: Response) => {
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
+    const bookings = await getBookings(req.params.userId);
+    if (bookings.length > 0) {
+      return res.json({
+        success: false,
+        message: "User cannot be deleted because, bookings exist.",
+        data: bookings,
+      });
+    }
     const result = await usersServices.deleteUser(req.params.userId);
 
     if (result.rowCount === 0) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: "User not found",
       });
     } else {
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         messsgae: "User deleted successfully",
       });

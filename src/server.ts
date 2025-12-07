@@ -14,7 +14,7 @@ app.use(express.json());
 initDB();
 
 app.get("/", async (req: Request, res: Response) => {
-  res.send("Server is working.")
+  res.send("Vehicle Management Server is working.")
 })
 
 app.get("/api/v1", async (req: Request, res: Response) => {

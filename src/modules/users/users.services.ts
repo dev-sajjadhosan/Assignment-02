@@ -19,7 +19,10 @@ const updateUser = async (id: string | undefined, body: any) => {
 };
 
 const deleteUser = async (id: string | undefined) => {
-  const result = await pool.query(`DELETE FROM users WHERE id=$1`, [id]);
+  const result = await pool.query(
+    `SELECT u.id, u.name, u.email FROM users u WHERE id=$1`,
+    [id]
+  );
   return result;
 };
 

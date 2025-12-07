@@ -35,14 +35,6 @@ const getSingleVehicle = async (id: string) => {
 };
 
 const updateVehicle = async (id: string, body: any) => {
-  const {
-    vehicle_name,
-    type,
-    registration_number,
-    daily_rent_price,
-    availability_status,
-  } = body;
-
   const keys = Object.keys(body);
   const values = Object.values(body);
 

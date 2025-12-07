@@ -4,19 +4,18 @@ import { getDate, getTimeFormate } from "../../helpers/timeFormatter";
 const createBooking = async (payload: any) => {
   const { customer_id, vehicle_id, rent_start_date, rent_end_date } = payload;
 
-  await pool.query(`UPDATE vehicles SET availability_status=$1 WHERE id =$2`, [
-    "booked",
-    vehicle_id,
-  ]);
-
   const vehicle = await pool.query(
-    `SELECT vehicle_name, daily_rent_price FROM vehicles WHERE id=$1`,
-    [vehicle_id]
+    `UPDATE vehicles SET availability_status=$1 WHERE id =$2 RETURNING vehicle_name, daily_rent_price`,
+    ["booked", vehicle_id]
   );
+
+  if(vehicle.rows.length === 0){
+    throw new Error("Vahicle not exist")
+  }
 
   const total_price =
     (getDate(rent_end_date) - getDate(rent_start_date)) *
-    vehicle.rows[0].daily_rent_price;
+    vehicle.rows[0]?.daily_rent_price;
 
   const result = await pool.query(
     `INSERT INTO bookings(customer_id, vehicle_id, rent_start_date, rent_end_date, total_price) VALUES($1, $2, $3, $4, $5) RETURNING *`,
