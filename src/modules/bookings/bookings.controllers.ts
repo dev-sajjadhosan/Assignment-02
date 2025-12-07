@@ -31,9 +31,8 @@ const createBooking = async (req: Request, res: Response) => {
 const getAllBookings = async (req: Request, res: Response) => {
   try {
     const role = req.user?.role;
-    console.log(req.user);
     const result = await bookingsServices.getAllBookings(role, req.user?.id);
-    console.log(result);
+
     res.status(200).json({
       success: true,
       message:
