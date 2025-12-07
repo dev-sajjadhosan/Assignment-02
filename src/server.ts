@@ -1,11 +1,10 @@
-import express, { Request, Response } from "express";
+import express, { json, Request, Response } from "express";
 import config from "./config";
 import initDB from "./config/db";
 import { authRouters } from "./auth/auth.routes";
 import { vehiclesRoutes } from "./modules/vehicles/vehicles.routes";
 import { usersRoutes } from "./modules/users/users.routes";
 import { bookingsRoutes } from "./modules/bookings/bookings.routes";
-import path from "path";
 
 const app = express();
 const port = config.port;
@@ -15,8 +14,11 @@ app.use(express.json());
 initDB();
 
 app.get("/", async (req: Request, res: Response) => {
-  res.send("Server is working ?")
-})
+  res.status(200).json({
+    success: true,
+    message: `Got to .../api/v1 ... for operations.`,
+  });
+});
 
 app.get("/api/v1", async (req: Request, res: Response) => {
   res.json({
@@ -37,8 +39,6 @@ app.use("/api/v1/vehicles", vehiclesRoutes);
 app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/bookings", bookingsRoutes);
 
-// app.listen(port, () => {
-//   console.log(`The Ordo Server is running now on Port: ${port}`);
-// });
-
-module.exports = app;
+app.listen(port, () => {
+  console.log(`The Ordo Server is running now on Port: ${port}`);
+});
