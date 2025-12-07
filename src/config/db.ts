@@ -43,7 +43,7 @@ const initDB = async () => {
         total_price INT NOT NULL CHECK (total_price > 0),
         status VARCHAR(20) NOT NULL DEFAULT 'active',
         CONSTRAINT bookking_status CHECK (status IN ('active','cancelled','returned'))
-        )
+        );
         `);
 };
 
