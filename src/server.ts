@@ -14,13 +14,8 @@ app.use(express.json());
 initDB();
 
 app.get("/", async (req: Request, res: Response) => {
-  // res.send("Server is working.")
-  res.status(200).json({
-    success: true,
-    message: "Please try to use /api/v1 then the opeation.",
-    note: "We are currently working on it. So, you will face some issue sometime. We hope you will try to understand.",
-  });
-});
+  res.send("Server is working.")
+})
 
 app.get("/api/v1", async (req: Request, res: Response) => {
   res.json({
