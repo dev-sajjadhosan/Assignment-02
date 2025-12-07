@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import config from "./config";
+import initDB from "./config/db";
 import { authRouters } from "./auth/auth.routes";
-import initDB, { pool } from "./config/db";
 import { vehiclesRoutes } from "./modules/vehicles/vehicles.routes";
 import { usersRoutes } from "./modules/users/users.routes";
 import { bookingsRoutes } from "./modules/bookings/bookings.routes";
@@ -13,7 +13,7 @@ app.use(express.json());
 
 initDB();
 
-app.get("/v1", async (req: Request, res: Response) => {
+app.get("/api/v1", async (req: Request, res: Response) => {
   res.json({
     health: "Ok",
     version: "v1",
@@ -27,11 +27,13 @@ app.get("/v1", async (req: Request, res: Response) => {
   });
 });
 
-app.use("/v1/auth", authRouters);
-app.use("/v1/vehicles", vehiclesRoutes);
-app.use("/v1/users", usersRoutes);
-app.use("/v1/bookings", bookingsRoutes);
+app.use("api/v1/auth", authRouters);
+app.use("api/v1/vehicles", vehiclesRoutes);
+app.use("api/v1/users", usersRoutes);
+app.use("api/v1/bookings", bookingsRoutes);
 
-app.listen(port, () => {
-  console.log(`The Ordo Server is running now on Port: ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`The Ordo Server is running now on Port: ${port}`);
+// });
+
+module.exports = app;
