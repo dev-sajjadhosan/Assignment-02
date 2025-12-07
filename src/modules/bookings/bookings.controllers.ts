@@ -31,47 +31,17 @@ const createBooking = async (req: Request, res: Response) => {
 const getAllBookings = async (req: Request, res: Response) => {
   try {
     const role = req.user?.role;
-
-    if (role === "admin") {
-      const result = await bookingsServices.getAllBookings();
-      res.status(200).json({
-        success: true,
-        message: "Bookings retrieved successfully",
-        data: {
-          ...result.result.rows[0],
-          rent_start_date: getTimeFormate(
-            result.result.rows[0].rent_start_date
-          ),
-          rent_end_date: getTimeFormate(result.result.rows[0].rent_end_date),
-          customer: {
-            name: result.customer.rows[0].name,
-            email: result.customer.rows[0].email,
-          },
-          vehicle: {
-            vehicle_name: result.vehicle.rows[0].vehicle_name,
-            registration_number: result.vehicle.rows[0].registration_number,
-          },
-        },
-      });
-    } else {
-      const result = await bookingsServices.getAllBookings();
-      res.status(200).json({
-        success: true,
-        message: "Bookings retrieved successfully",
-        data: {
-          ...result.result.rows[0],
-          rent_start_date: getTimeFormate(
-            result.result.rows[0].rent_start_date
-          ),
-          rent_end_date: getTimeFormate(result.result.rows[0].rent_end_date),
-          vehicle: {
-            vehicle_name: result.vehicle.rows[0].vehicle_name,
-            registration_number: result.vehicle.rows[0].registration_number,
-            type: result.vehicle.rows[0].type,
-          },
-        },
-      });
-    }
+    console.log(req.user);
+    const result = await bookingsServices.getAllBookings(role, req.user?.id);
+    console.log(result);
+    res.status(200).json({
+      success: true,
+      message:
+        role === "admin"
+          ? "Bookings retrieved successfully"
+          : "Your bookings retrieved successfully",
+      data: result,
+    });
   } catch (err: any) {
     res.status(500).json({
       success: false,
@@ -95,6 +65,10 @@ const updateBookings = async (req: Request, res: Response) => {
         message: "Booking marked as returned. Vehicle is now available",
         data: {
           ...result.result.rows,
+          rent_start_date: getTimeFormate(
+            result.result.rows[0].rent_start_date
+          ),
+          rent_end_date: getTimeFormate(result.result.rows[0].rent_end_date),
           vehicle: {
             availability_status: result.vehicle.rows[0].availability_status,
           },
