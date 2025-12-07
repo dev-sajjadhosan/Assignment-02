@@ -1,4 +1,4 @@
-import express, { json, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import config from "./config";
 import initDB from "./config/db";
 import { authRouters } from "./auth/auth.routes";
@@ -14,11 +14,8 @@ app.use(express.json());
 initDB();
 
 app.get("/", async (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: `Got to .../api/v1 ... for operations.`,
-  });
-});
+  res.send("Server is working.")
+})
 
 app.get("/api/v1", async (req: Request, res: Response) => {
   res.json({
