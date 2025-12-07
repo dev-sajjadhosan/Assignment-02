@@ -94,11 +94,7 @@ const updateBookings = async (req: Request, res: Response) => {
         success: true,
         message: "Booking marked as returned. Vehicle is now available",
         data: {
-          ...result.result.rows[0],
-          rent_start_date: getTimeFormate(
-            result.result.rows[0].rent_start_date
-          ),
-          rent_end_date: getTimeFormate(result.result.rows[0].rent_end_date),
+          ...result.result.rows,
           vehicle: {
             availability_status: result.vehicle.rows[0].availability_status,
           },
