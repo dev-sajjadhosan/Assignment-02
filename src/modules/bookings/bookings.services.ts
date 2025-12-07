@@ -47,10 +47,8 @@ const getAllBookings = async (role: "admin" | "customer", userId?: number) => {
     JOIN users u ON b.customer_id = u.id
     JOIN vehicles v ON b.vehicle_id = v.id
   `;
-
   const params: any[] = [];
 
-  // 🔥 Add customer filter only for customer role
   if (role === "customer") {
     query += ` WHERE b.customer_id = $1`;
     params.push(userId);
