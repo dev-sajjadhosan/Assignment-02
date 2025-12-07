@@ -14,6 +14,10 @@ app.use(express.json());
 
 initDB();
 
+app.get("/", async (req: Request, res: Response) => {
+  res.send("Server is working ?")
+})
+
 app.get("/api/v1", async (req: Request, res: Response) => {
   res.json({
     health: "Ok",
