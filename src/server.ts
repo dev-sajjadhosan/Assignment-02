@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import config from "./config";
 import initDB from "./config/db";
-import { authRouters } from "./auth/auth.routes";
+import { authRouters } from "./modules/auth/auth.routes";
 import { vehiclesRoutes } from "./modules/vehicles/vehicles.routes";
 import { usersRoutes } from "./modules/users/users.routes";
 import { bookingsRoutes } from "./modules/bookings/bookings.routes";

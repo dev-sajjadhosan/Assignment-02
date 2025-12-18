@@ -1,8 +1,8 @@
 import { Request } from "express";
-import { pool } from "../config/db";
-import { hashPassword, unhashPassword } from "../helpers/handlePassword";
+import { pool } from "../../config/db";
+import { hashPassword, unhashPassword } from "../../helpers/handlePassword";
 import { sign } from "jsonwebtoken";
-import config from "../config";
+import config from "../../config";
 
 const registerUser = async (
   name: string,
